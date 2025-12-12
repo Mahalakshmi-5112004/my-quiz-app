@@ -10,12 +10,16 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export default function Button({ children, className = "", ...props }: ButtonProps) {
   return (
-    <motion.button
-      {...props}
+    <motion.div
       whileTap={{ scale: 0.95 }}
-      className={`px-4 py-2 rounded-lg ${className}`}
+      className="inline-block w-full"
     >
-      {children}
-    </motion.button>
+      <button
+        {...props}
+        className={`px-4 py-2 rounded-lg w-full ${className}`}
+      >
+        {children}
+      </button>
+    </motion.div>
   );
 }
