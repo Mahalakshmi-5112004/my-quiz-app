@@ -1,9 +1,9 @@
 "use client";
 
-import { motion, MotionProps } from "framer-motion";
-import React from "react";
+import { motion } from "framer-motion";
+import type { ComponentProps } from "react";
 
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & MotionProps & {
+type MotionButtonProps = ComponentProps<"button"> & {
   children: React.ReactNode;
   className?: string;
 };
@@ -12,11 +12,11 @@ export default function Button({
   children,
   className = "",
   ...props
-}: ButtonProps) {
+}: MotionButtonProps) {
   return (
     <motion.button
       whileTap={{ scale: 0.95 }}
-      {...props}
+      {...props} // ⬅ onClick, disabled, type, etc.
       className={`px-4 py-2 rounded-lg ${className}`}
     >
       {children}
