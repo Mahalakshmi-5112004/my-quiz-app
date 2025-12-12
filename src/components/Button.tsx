@@ -1,25 +1,29 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface BtnProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   className?: string;
 }
 
-export default function Button({ children, className = "", ...props }: ButtonProps) {
+export default function Button({ children, className = "", ...props }: BtnProps) {
+  const [pressed, setPressed] = useState(false);
+
   return (
-    <motion.div
-      whileTap={{ scale: 0.95 }}
-      className="inline-block w-full"
+    <button
+      {...props}
+      onMouseDown={() => setPressed(true)}
+      onMouseUp={() => setPressed(false)}
+      onMouseLeave={() => setPressed(false)}
+      style={{
+        transform: pressed ? "scale(0.95)" : "scale(1)",
+        transition: "transform 0.12s ease",
+      }}
+      className={`px-4 py-2 rounded-lg ${className}`}
     >
-      <button
-        {...props}
-        className={`px-4 py-2 rounded-lg w-full ${className}`}
-      >
-        {children}
-      </button>
-    </motion.div>
+      {children}
+    </button>
   );
 }
