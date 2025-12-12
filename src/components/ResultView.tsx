@@ -13,7 +13,7 @@ export default function ResultView({ score, onRestart }: any) {
       if (i <= score) {
         setDisplayScore(i);
         i++;
-        setTimeout(run, 45); // slower + smooth
+        setTimeout(run, 45);
       }
     };
 
@@ -33,19 +33,22 @@ export default function ResultView({ score, onRestart }: any) {
         </h2>
 
         {/* ANIMATED NUMBER */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={displayScore}
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -25 }}
-            transition={{ duration: 0.25 }}
-            className="text-[140px] font-heading text-[#0b3750] leading-none mb-8"
-          >
-            {displayScore}
-            <span className="text-4xl align-top">%</span>
-          </motion.div>
-        </AnimatePresence>
+        <div className="text-[140px] font-heading text-[#0b3750] leading-none mb-8 flex justify-center">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={displayScore}
+              initial={{ opacity: 0, y: 40 }}   // comes from below
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -40 }}     // vanishes upward
+              transition={{ duration: 0.35, ease: "easeOut" }}
+              style={{ display: "inline-block" }} // <--- fixes Netlify TS error
+            >
+              {displayScore}
+            </motion.div>
+          </AnimatePresence>
+
+          <span className="text-4xl align-top ml-2">%</span>
+        </div>
 
         <button
           onClick={onRestart}
